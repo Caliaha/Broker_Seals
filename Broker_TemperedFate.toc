@@ -1,0 +1,11 @@
+## Interface: 60000
+## Title: Broker_TemperedFate
+## Version: @project-version@
+## Notes: Shows which quests have been done for seals of tempered fate
+## Author: Caliaha of Cairne
+## OptionalDeps: Ace3
+## X-Embeds: Ace3
+
+embeds.xml
+
+Broker_TemperedFate.lua
