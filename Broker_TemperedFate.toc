@@ -3,6 +3,7 @@
 ## Version: @project-version@
 ## Notes: Shows which quests have been done for seals of tempered fate
 ## Author: Caliaha of Cairne
+## SavedVariables: Broker_TemperedFateDB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
 
