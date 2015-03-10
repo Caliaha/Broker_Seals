@@ -19,6 +19,12 @@ end
 
 
 function Broker_TemperedFate:OnInitialize()
+ local defaults = {
+  profile = {
+   size = 1,
+  },
+ }
+ self.db = LibStub("AceDB-3.0"):New("Broker_TemperedFateDB", defaults, true)
  self:RegisterChatCommand("bseals", "Chat")
 end
 
@@ -46,7 +52,13 @@ end
 
 function Broker_TemperedFate:Update()
  local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax, _, _ = GetCurrencyInfo(994)
- Broker_TemperedFate.LDB.text = "Seals - " .. "Total: " .. currentAmount .. "/" .. totalMax .. " Weekly: " .. self:Count() .. "/3"
+ if (self.db.profile.size == 1) then
+  Broker_TemperedFate.LDB.text = "Seals - " .. "Total: " .. currentAmount .. "/" .. totalMax .. " Weekly: " .. self:Count() .. "/3"
+ elseif (self.db.profile.size == 2) then
+  Broker_TemperedFate.LDB.text = currentAmount .. "/" .. totalMax .. ":" .. self:Count() .. "/3"
+ else
+  Broker_TemperedFate.LDB.text = ""
+ end
 end
 
 function Broker_TemperedFate.LDB.OnEnter(self)
@@ -69,7 +81,29 @@ function Broker_TemperedFate.LDB.OnEnter(self)
  tooltip:Show()
 end
 
-function Broker_TemperedFate:Chat()
+function Broker_TemperedFate:Chat(input)
+ if not input then
+  return
+ end
+
+ local command, nextposition = self:GetArgs(input, 1, 1)
+ 
+ if (command == "normal") then
+  self.db.profile.size = 1
+  self:Update()
+  return
+ end
+ if (command == "small") then
+  self.db.profile.size = 2
+  self:Update()
+  return
+ end
+ if (command == "none") then
+  self.db.profile.size = 0
+  self:Update()
+  return
+ end
+ 
  local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax, _, _ = GetCurrencyInfo(994)
  self:Print("Seals - " .. "Total: " .. currentAmount .. "/" .. totalMax .. " Weekly: " .. self:Count() .. "/3")
  self:Print("Type Rank 1 Rank 2 Rank 3")
