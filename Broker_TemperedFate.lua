@@ -31,6 +31,8 @@ end
 function Broker_TemperedFate:OnEnable()
  self:RegisterEvent("CHAT_MSG_CURRENCY", "Update")
  self:RegisterEvent("PLAYER_ENTERING_WORLD", "Update")
+ self:RegisterEvent("BONUS_ROLL_RESULT", "Update")
+ self:RegisterEvent("CURRENCY_DISPLAY_UPDATE", "Update")
 end
 
 function Broker_TemperedFate:OnDisable()
