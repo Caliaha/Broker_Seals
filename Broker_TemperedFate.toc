@@ -1,4 +1,4 @@
-## Interface: 60100
+## Interface: 60200
 ## Title: Broker_TemperedFate
 ## Version: @project-version@
 ## Notes: Shows which quests have been done for seals of tempered fate
