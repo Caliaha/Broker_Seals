@@ -45,7 +45,7 @@ function Broker_TemperedFate:Count()
  local QuestIDs = { 36055, 37452, 37453, 36056, 37456, 37457, 36054, 37454, 37455, 36057, 37458, 37459, 36058 }
  local count = 0
  for key, value in ipairs(QuestIDs) do
-  if (QC(value) == "Yes") then
+  if (QC(value) == "Yes") then 
    count = count + 1
   end
  end
@@ -53,11 +53,15 @@ function Broker_TemperedFate:Count()
 end
 
 function Broker_TemperedFate:Update()
- local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax, _, _ = GetCurrencyInfo(994)
+ -- Old seal is 994
+ local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax, _, _ = GetCurrencyInfo(1129)
  if (self.db.profile.size == 1) then
   Broker_TemperedFate.LDB.text = "Seals - " .. "Total: " .. currentAmount .. "/" .. totalMax .. " Weekly: " .. self:Count() .. "/3"
  elseif (self.db.profile.size == 2) then
   Broker_TemperedFate.LDB.text = currentAmount .. "/" .. totalMax .. ":" .. self:Count() .. "/3"
+ elseif (self.db.profile.size == 3) then
+  local _, currentAmountO, _, earnedThisWeekO, weeklyMaxO, totalMaxO, _, _ = GetCurrencyInfo(994)
+  Broker_TemperedFate.LDB.text = currentAmount .. "/" .. totalMax .. ":" .. currentAmountO .. "/" .. totalMaxO
  else
   Broker_TemperedFate.LDB.text = ""
  end
@@ -97,6 +101,11 @@ function Broker_TemperedFate:Chat(input)
  end
  if (command == "small") then
   self.db.profile.size = 2
+  self:Update()
+  return
+ end
+ if (command == "both") then
+  self.db.profile.size = 3
   self:Update()
   return
  end
