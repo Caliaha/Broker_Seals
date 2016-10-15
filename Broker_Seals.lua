@@ -2,6 +2,8 @@ Broker_Seals = LibStub("AceAddon-3.0"):NewAddon("Broker_Seals", "AceConsole-3.0"
 
 local LQT = LibStub("LibQTip-1.0")
 
+-- 44212/unseen-fate  Maybe for hunters idk
+
 Broker_Seals.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("Broker_Seals", {
  type = "data source",
  label = "Broker_Seals",
@@ -28,9 +30,9 @@ function Broker_Seals:OnInitialize()
  self:RegisterChatCommand("bseals", "Chat")
  
  self.currentSeal = 1273
- self.sealOrder = { "Seal of Tempered Fate", "Seal of Inevitable Fate", "Warforged Seal", "Mogu Rune of Fate", "Elder Charm" }
+ self.sealOrder = { "Seal of Broken Fate", "Seal of Inevitable Fate", "Seal of Tempered Fate", "Warforged Seal", "Mogu Rune of Fate", "Elder Charm" }
  self.seals = { }
- --self.seals["Seal of Broken Fate"] = 1273
+ self.seals["Seal of Broken Fate"] = 1273
  self.seals["Seal of Tempered Fate"] =  994
  self.seals["Seal of Inevitable Fate"] = 1129
  self.seals["Elder Charm"] = 697
@@ -52,7 +54,7 @@ function Broker_Seals:OnDisable()
 end
 
 function Broker_Seals:Count()
- local QuestIDs = { 43892, 43893, 43894, 43895, 43896, 43897 }
+ local QuestIDs = { 43892, 43893, 43894, 43895, 43896, 43897, 43510 }
  local count = 0
  
  for key, value in ipairs(QuestIDs) do
@@ -87,6 +89,7 @@ function Broker_Seals.LDB.OnEnter(self)
  tooltip:AddSeparator()
  tooltip:AddLine("Order", QC(43892), QC(43893), QC(43894))
  tooltip:AddLine("Gold", QC(43895), QC(43896), QC(43897))
+ tooltip:AddLine("Class Hall", QC(43510))
  if (Broker_Seals.db.profile.older) then
   tooltip:AddSeparator()
   local header = false
@@ -148,6 +151,7 @@ function Broker_Seals:Chat(input)
  self:Print("Type Rank 1 Rank 2 Rank 3")
  self:Print("Gold: " .. QC(43895) .. " " .. QC(43896) .. " " .. QC(43897))
  self:Print("Order: " .. QC(43892) .. " " .. QC(43893) .. " " .. QC(43895))
+ self:Print("Class Hall", QC(43510))
  --self:Print("Bunker: ", QC(36058))
  if (self.db.profile.older) then
   for key, value in pairs(self.sealOrder) do
