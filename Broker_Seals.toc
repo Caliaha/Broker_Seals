@@ -1,11 +1,10 @@
-## Interface: 70100
+## Interface: 70200
 ## Title: Broker_Seals
 ## Version: @project-version@
 ## Notes: Displays amount of Seals of Broken Fate
 ## Author: Caliaha of Cairne
 ## SavedVariables: Broker_SealsDB
 ## OptionalDeps: Ace3
-## X-Embeds: Ace3
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua
