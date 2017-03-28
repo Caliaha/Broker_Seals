@@ -2,7 +2,10 @@ Broker_Seals = LibStub("AceAddon-3.0"):NewAddon("Broker_Seals", "AceConsole-3.0"
 
 local LQT = LibStub("LibQTip-1.0")
 
--- 44212/unseen-fate  Maybe for hunters idk
+local ORDERHALLSEALEXCLUSION = { }
+ORDERHALLSEALEXCLUSION["DEATH KNIGHT"] = true
+ORDERHALLSEALEXCLUSION["WARLOCK"] = true
+ORDERHALLSEALEXCLUSION["WARRIOR"] = true
 
 Broker_Seals.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("Broker_Seals", {
  type = "data source",
@@ -89,7 +92,10 @@ function Broker_Seals.LDB.OnEnter(self)
  tooltip:AddSeparator()
  tooltip:AddLine("Order", QC(43892), QC(43893), QC(43894))
  tooltip:AddLine("Gold", QC(43895), QC(43896), QC(43897))
- tooltip:AddLine("Class Hall", QC(43510))
+ local _, class = UnitClass("player")
+ if (not ORDERHALLSEALEXCLUSION[class]) then
+  tooltip:AddLine("Class Hall", QC(43510))
+ end
  if (Broker_Seals.db.profile.older) then
   tooltip:AddSeparator()
   local header = false
@@ -146,16 +152,20 @@ function Broker_Seals:Chat(input)
   return
  end
  
- local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax, _, _ = GetCurrencyInfo(self.currentSeal)
+ local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax = GetCurrencyInfo(self.currentSeal)
  self:Print("Seals - " .. "Total: " .. currentAmount .. "/" .. totalMax .. " Weekly: " .. self:Count() .. "/3")
  self:Print("Type Rank 1 Rank 2 Rank 3")
  self:Print("Gold: " .. QC(43895) .. " " .. QC(43896) .. " " .. QC(43897))
  self:Print("Order: " .. QC(43892) .. " " .. QC(43893) .. " " .. QC(43895))
- self:Print("Class Hall", QC(43510))
+ local _, class = UnitClass("player")
+ if (not ORDERHALLSEALEXCLUSION[class]) then
+  self:Print("Class Hall", QC(43510))
+ end
+ 
  --self:Print("Bunker: ", QC(36058))
  if (self.db.profile.older) then
   for key, value in pairs(self.sealOrder) do
-   local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax, _, _ = GetCurrencyInfo(self.seals[value])
+   local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax = GetCurrencyInfo(self.seals[value])
    if (currentAmount ~= 0) then
     self:Print(value, currentAmount .. "/" .. totalMax)
    end
