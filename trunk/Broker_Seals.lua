@@ -10,7 +10,7 @@ ORDERHALLSEALEXCLUSION["WARRIOR"] = true
 Broker_Seals.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("Broker_Seals", {
  type = "data source",
  label = "Broker_Seals",
- icon = "Interface\\Icons\\inv_misc_elvencoins",
+ icon = "Interface\\Icons\\inv_misc_azsharacoin",
  text = "Seals",
 })
 
@@ -57,7 +57,7 @@ function Broker_Seals:OnDisable()
 end
 
 function Broker_Seals:Count()
- local QuestIDs = { 43892, 43893, 43894, 43895, 43896, 43897, 43510 }
+ local QuestIDs = { 43892, 43893, 43894, 43895, 43896, 43897, 43510, 47851, 47864, 47865 }
  local count = 0
  
  for key, value in ipairs(QuestIDs) do
@@ -92,6 +92,7 @@ function Broker_Seals.LDB.OnEnter(self)
  tooltip:AddSeparator()
  tooltip:AddLine("Order", QC(43892), QC(43893), QC(43894))
  tooltip:AddLine("Gold", QC(43895), QC(43896), QC(43897))
+ tooltip:AddLine("Honor", QC(47851), QC(47864), QC(47865))
  local _, class = UnitClass("player")
  if (not ORDERHALLSEALEXCLUSION[class]) then
   tooltip:AddLine("Class Hall", QC(43510))
@@ -152,11 +153,12 @@ function Broker_Seals:Chat(input)
   return
  end
  
- local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax = GetCurrencyInfo(self.currentSeal)
+ local _, currentAmount, _, _, _, totalMax = GetCurrencyInfo(self.currentSeal)
  self:Print("Seals - " .. "Total: " .. currentAmount .. "/" .. totalMax .. " Weekly: " .. self:Count() .. "/3")
  self:Print("Type Rank 1 Rank 2 Rank 3")
  self:Print("Gold: " .. QC(43895) .. " " .. QC(43896) .. " " .. QC(43897))
  self:Print("Order: " .. QC(43892) .. " " .. QC(43893) .. " " .. QC(43895))
+ self:Print("Honor: " .. QC(47851) .. " " .. QC(47864) .. " " .. QC(47865))
  local _, class = UnitClass("player")
  if (not ORDERHALLSEALEXCLUSION[class]) then
   self:Print("Class Hall", QC(43510))
@@ -165,7 +167,7 @@ function Broker_Seals:Chat(input)
  --self:Print("Bunker: ", QC(36058))
  if (self.db.profile.older) then
   for key, value in pairs(self.sealOrder) do
-   local _, currentAmount, _, earnedThisWeek, weeklyMax, totalMax = GetCurrencyInfo(self.seals[value])
+   local _, currentAmount, _, _, _, totalMax = GetCurrencyInfo(self.seals[value])
    if (currentAmount ~= 0) then
     self:Print(value, currentAmount .. "/" .. totalMax)
    end
